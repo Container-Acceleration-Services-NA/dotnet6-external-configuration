@@ -1,9 +1,16 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// Add Healtchecks
+builder.Services.AddHealthChecks();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+// Healtcheck endpoint
+app.MapHealthChecks("/healthz");
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
