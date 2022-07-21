@@ -2,12 +2,24 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using EmployeeCompany.Models;
 
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Set conection String
+var connectionString = builder.Configuration.GetConnectionString("Employees") ?? "Data Source=Employee.db";
+
+
 // Swagger config
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<EmployeeDb>(options => options.UseInMemoryDatabase("items"));
+
+builder.Services.AddDbContext<EmployeeDb>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("SqlConnection")));
+
+
+// Uncomment this line to use the inmemory DB
+//builder.Services.AddDbContext<EmployeeDb>(options => options.UseInMemoryDatabase("items"));
 builder.Services.AddSwaggerGen(c =>
 {
      c.SwaggerDoc("v1", new OpenApiInfo {
@@ -47,6 +59,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
 
 app.UseAuthorization();
 

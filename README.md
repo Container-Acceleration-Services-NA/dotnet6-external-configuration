@@ -17,3 +17,11 @@ podman run --rm=true -it -p 7111:7111 -v path/to/appsettings.external.json:/app/
 From a browser access the following URL
 
 http://localhost:7111/swagger/index.html
+
+# In memory DB
+
+Comment the builder.Services.AddDbContext from Program.cs and uncomment the in memory config
+
+Comment <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />and uncomment the inmemory dependency
+
+
